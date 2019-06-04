@@ -38,6 +38,19 @@ let root = {
     }
 };
 
+let app = express();
+app.use(cors());
+app.use(
+    "/graphql",
+    graphqlHTTP({
+        schema: schema,
+        rootValue: root,
+        graphiql: true
+    })
+);
+// set application port
+app.listen(4000);
+
 // Maps id to User object
 let userslist = {
     a: {
@@ -75,7 +88,3 @@ let postslist = {
         }
     }
 };
-
-/* The data is truncated for brevity. You can fetch the complete data from the server.js file on Github.
-Now that this is specified, the next thing to do is to specify the resolver function for the API. The resolver ****tells your 
-server how to handle an incoming query telling it where to get the data for a given field. Add the resolver to the server.js file that looks like this:*/
