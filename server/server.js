@@ -4,6 +4,9 @@ let express = require("express");
 let graphqlHTTP = require("express-graphql");
 let { buildSchema } = require("graphql");
 let cors = require("cors");
+let Pusher = require("pusher");
+let bodyParser = require("body-parser");
+let Multipart = require("connect-multiparty");
 
 let schema = buildSchema(`
     type User {

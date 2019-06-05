@@ -1,12 +1,13 @@
 // src.App.js
 
-import React, { Component } from 'react';
+import React from 'react';
 import './App.css';
 import Header from './components/Header';
 import Post from './components/Post';
 import ApolloClient from 'apollo-boost';
+import { ApolloProvider } from "react-apollo";
 
-const client =new ApolloClient({
+const client = new ApolloClient({
   uri : "http://localhost:4000/graphql"
 });
 
