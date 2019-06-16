@@ -80,6 +80,15 @@ let root = {
     }
 };
 
+// Pusher client
+let pusher = new Pusher({
+    appId: 'PUSHER_APP_ID',
+    key: 'PUSHER-APP_KEY',
+    secret: 'PUSHER_APP_SECRET',
+    cluster: 'PUSHER_CLUSTER',
+    encrypted: true
+});
+
 let app = express();
 app.use(cors());
 app.use(
@@ -90,5 +99,31 @@ app.use(
         graphiql: true
     })
 );
+
+// add Middleware
+let multipartyMiddleware = new Multipart();
+
+// trigger add a new post
+app.post('/newpost', multipartyMiddleware, (req,res) => {
+    // create a sample post
+    let post = {
+        user : {
+            nickname : req.body.name,
+            avatar : req.body.avatar
+        },
+        image : req.body.image,
+        caption : req.body.caption
+    }
+
+    // trigger pusher event
+    pusher.trigger("post-channel", "new-post", {
+        post
+    });
+
+    return res.json({status : "Post created"});
+});
+
+
+
 // set application port
 app.listen(4000);
